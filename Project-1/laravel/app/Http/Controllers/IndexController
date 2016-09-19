@@ -1,0 +1,13 @@
+   const PAGE = 8;
+ 
+   public function index()
+   {
+        $page = Input::get('page',session('page'));
+        session()->put('page',$page);          
+        Paginator::currentPageResolver(function () use ($page) {
+                return $page;
+        });        
+        $total = self::PAGE;
+        $boards = Board::paginate(self::PAGE);  
+        return view('boards.index', compact('boards','page','total'));
+   }
